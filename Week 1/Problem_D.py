@@ -18,5 +18,5 @@ def aux(a, b, n):
 
 
 for i in range(t):
-    a, b, n = raw_input().split()
-    aux(int(a), int(b), int(n))
+    a, b, n = map(int, raw_input().split())
+    aux(a, b, n)

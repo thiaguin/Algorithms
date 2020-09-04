@@ -12,6 +12,6 @@ def solve(l, r, d):
 
 
 for i in range(n):
-    l, r, d = raw_input().split(' ')
-    result = int(solve(int(l), int(r), int(d)))
+    l, r, d = map(int, raw_input().split())
+    result = int(solve(l, r, d))
     print(result)
