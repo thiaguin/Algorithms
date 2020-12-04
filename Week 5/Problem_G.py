@@ -1,5 +1,5 @@
 # Title -> The last digit
-# Description -> https://www.spoj.com/problems/LASTDIG/
+# Description -> spoj.com/problems/LASTDIG/
 
 t = input()
 

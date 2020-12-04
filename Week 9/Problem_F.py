@@ -1,5 +1,5 @@
-# Title -> 	Bytelandian Blingors Network
-# Description -> spoj.com/problems/BLINNET/en/
+# Title -> Sereja and Suffixes
+# Description -> codeforces.com/problemset/problem/368/B
 
 t = int(input())
 
