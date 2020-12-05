@@ -1,34 +1,34 @@
 # Title -> Alphacode
 # Description -> spoj.com/problems/ACODE/en/
 
-from heapq import heappush, heappop
-infinity = 99999999999999
-vertice, edge = map(int, input().split())
+word = raw_input()
+while (word != '0'):
+    encryption = map(int, list(word))
+    results = [1]
 
-graph = [[] for _ in range(vertice)]
-d = [0] + [infinity] * vertice
-p = [-1] * vertice
-q = [(0, 0)]
+    aux = int(''.join(map(str, encryption[:2])))
+    aux_value = 2 if aux <= 26 and aux >= 10 else 1
 
-for _ in range(edge):
-    u, v, weight = map(int, input().split())
-    graph[u-1] += [(weight, v-1)]
-    graph[v-1] += [(weight, u-1)]
+    if len(encryption) >= 2 and encryption[1] == 0:
+        results[0] = 0
+        aux_value = 1
 
-while q:
-    u = heappop(q)[1]
-    for e in graph[u]:
-        t, v = d[u] + e[0], e[1]
-        if t < d[v]:
-            d[v], p[v] = t, u
-            heappush(q, (d[v], v))
+    if len(encryption) > 2 and encryption[2] == 0:
+        aux_value = 1
 
-if d[vertice-1] == infinity:
-    print(-1)
-else:
-    x, a = vertice - 1, []
-    while x != -1:
-        a += [x + 1]
-        x = p[x]
-    a.reverse()
-    print(' '.join(map(str, a)))
+    results.append(aux_value)
+
+    for i in range(2, len(encryption)):
+        value = (encryption[i - 1] * 10) + encryption[i]
+        following = ''.join(map(str, encryption[i: i + 2]))
+
+        if encryption[i] == 0:
+            results.append(results[i - 1])
+            results[i - 2] = 0
+        elif value <= 26 and value >= 10 and not following in ['10', '20']:
+            results.append(results[i - 1] + results[i - 2])
+        else:
+            results.append(results[i - 1])
+
+    print(results[len(results) - 1])
+    word = raw_input()

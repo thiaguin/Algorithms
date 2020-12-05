@@ -1,16 +1,23 @@
 # Title -> The Knapsack Problem
 # Description -> spoj.com/problems/KNAPSACK/en/
 
-x_a, y_a = map(int, raw_input().split())
-x_b, y_b = map(int, raw_input().split())
-x_c, y_c = map(int, raw_input().split())
+s, n = map(int, raw_input().split())
+values = []
+sizes = []
 
-position = ((x_b - x_a) * (y_c - y_a)) - ((y_b - y_a) * (x_c - x_a))
-result = ''
+for i in range(n):
+    size, value = map(int, raw_input().split())
+    values.append(value)
+    sizes.append(size)
 
-if (position == 0):
-    result = 'TOWARDS'
-else:
-    result = 'RIGHT' if position < 0 else 'LEFT'
+memo = [[0 for x in range(s + 1)] for x in range(n + 1)]
 
-print(result)
+for i in range(1, n + 1):
+    for j in range(1, s + 1):
+        if sizes[i - 1] <= j:
+            memo[i][j] = max(values[i-1] + memo[i-1]
+                             [j-sizes[i-1]], memo[i-1][j])
+        else:
+            memo[i][j] = memo[i - 1][j]
+
+print(memo[n][s])

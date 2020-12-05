@@ -2,40 +2,23 @@
 # Description -> spoj.com/problems/ADASEQEN/en/
 
 n, m = map(int, raw_input().split())
-graph = {}
-visiteds = {}
+values = map(int, raw_input().split())
 
-for i in range(m):
-    a, b = map(int, raw_input().split())
+letters = 'abcdefghijklmnopqrstuvwxyz'
+letters_index = {letters[i]: values[i] for i in range(len(letters))}
 
-    if (a in graph):
-        graph[a][b] = True
-    else:
-        graph[a] = {b: True, a: True}
+first = raw_input()
+second = raw_input()
 
-    if (b in graph):
-        graph[b][a] = True
-    else:
-        graph[b] = {a: True, b: True}
+table = [[0 for _ in range(m + 1)] for _ in range(n + 1)]
 
+for i in range(1, n + 1):
+    for j in range(1, m + 1):
+        if (first[i - 1] == second[j - 1]):
+            value = letters_index[first[i - 1]]
+            table[i][j] = value + table[i - 1][j - 1]
+        else:
+            table[i][j] = max(table[i - 1][j], table[i][j - 1])
 
-def get_result(value):
-    for key in graph[value]:
-        visiteds[key] = True
-        if graph[value] != graph[key]:
-            return False
-
-    return True
-
-
-def return_result():
-    for i in graph:
-        if not i in visiteds:
-            result = get_result(i)
-            if (not result):
-                return 'NO'
-
-    return 'YES'
-
-
-print(return_result())
+results = [max(row) for row in table]
+print(max(results))
